@@ -9,6 +9,8 @@ using API.Models;
 using static System.Reflection.Metadata.BlobBuilder;
 using API.Repository.IRepository;
 using API.Repository;
+using AutoMapper;
+using API.DTOS;
 
 namespace API.Controllers
 {
@@ -17,25 +19,40 @@ namespace API.Controllers
     public class FutureResultsController : ControllerBase
     {
         private readonly IFutureResultRepository _futureResult;
-        public FutureResultsController(IFutureResultRepository futureResult)
+        private readonly IMapper _mapper;
+
+        public FutureResultsController(IFutureResultRepository futureResult, IMapper mapper)
         {
+            _mapper = mapper;
             _futureResult = futureResult;
         }
 
         [HttpGet("GetAll")]
         [ProducesResponseType(200, Type = typeof(IEnumerable<FutureResults>))]
-        public async Task<IEnumerable<FutureResults>> GetAllPredictions()
+        public async Task<ActionResult<IEnumerable<FutureResults>>> GetAllPredictions()
         {
-            var predictions = await _futureResult.GetAllPredictions();
-            
-            return predictions;
+            var predictions = _mapper.Map<IEnumerable<FutureResultsDTO>>(await _futureResult.GetAllPredictions());
+            if (predictions == null) return BadRequest();            
+            return Ok(predictions);
         }
 
         [HttpGet("GetAll/{id}")]
         [ProducesResponseType(200, Type = typeof(FutureResults))]
         public async Task<IActionResult> GetPredictionDetailed(int id)
         {
-            var prediction = await _futureResult.GetAPrediction(id);
+            var prediction = _mapper.Map<FutureResultsDTO>(await _futureResult.GetAPrediction(id));
+
+            return Ok(prediction);
+        }
+
+        [HttpGet("GetSpecificPrediction")]
+        [ProducesResponseType(200, Type = typeof(FutureResults))]
+        public async Task<IActionResult> GetSpecificPrediction(string Country, int Year, int Male,
+                                                                    int Female, int GenderTotal, int AgeUnder18, int AgeOver18, int AgeTotal)
+        {
+            var prediction = await _futureResult.GetaSaftyIndexForaCountry(Country, Year, Male,
+                                                                    Female, GenderTotal, AgeUnder18, AgeOver18, AgeTotal);
+
             return Ok(prediction);
         }
     }
