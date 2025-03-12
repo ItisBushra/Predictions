@@ -52,7 +52,6 @@ namespace API.Controllers
         {
             var prediction = await _futureResult.GetaSaftyIndexForaCountry(Country, Year, Male,
                                                                     Female, GenderTotal, AgeUnder18, AgeOver18, AgeTotal);
-
             return Ok(prediction);
         }
     }
