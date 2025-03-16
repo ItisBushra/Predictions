@@ -39,8 +39,23 @@ namespace API.Repository
             {
                 var SpecificPrediction = await _context.Future_Results.FirstOrDefaultAsync(c => c.Year == Year && c.Country == Country && c.GenderFemale == Female
                 && c.GenderMale == Male && c.GenderTotal == GenderTotal && c.AgeOver18 == AgeOver18 && c.AgeUnder18 == AgeUnder18 && c.AgeTotal == AgeTotal);
-                var saftyindex = SpecificPrediction.SaftyIndex;
+                var saftyindex = SpecificPrediction.SafetyIndex;
                 return saftyindex;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+        public async Task<double?> GetaSaftyPercentageForaCountry(string Country, int Year, int Male,
+                                                                   int Female, int GenderTotal, int AgeUnder18, int AgeOver18, int AgeTotal)
+        {
+            try
+            {
+                var SpecificPrediction = await _context.Future_Results.FirstOrDefaultAsync(c => c.Year == Year && c.Country == Country && c.GenderFemale == Female
+                && c.GenderMale == Male && c.GenderTotal == GenderTotal && c.AgeOver18 == AgeOver18 && c.AgeUnder18 == AgeUnder18 && c.AgeTotal == AgeTotal);
+                var saftyPercentage = SpecificPrediction.SaftyPercentage;
+                return saftyPercentage;
             }
             catch (Exception ex)
             {

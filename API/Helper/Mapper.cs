@@ -21,7 +21,8 @@ namespace API.Helper
                 .ForMember(dest => dest.Age_Under18, opt => opt.MapFrom(src => src.AgeUnder18))
                 .ForMember(dest => dest.Age_Over18, opt => opt.MapFrom(src => src.AgeOver18))
                 .ForMember(dest => dest.Age_Total, opt => opt.MapFrom(src => src.AgeTotal))
-                .ForMember(dest => dest.Safty_Index, opt => opt.MapFrom(src => src.SaftyIndex));
+                .ForMember(dest => dest.Safty_Index, opt => opt.MapFrom(src => src.SafetyIndex))
+                .ForMember(dest => dest.Safty_Percentage, opt => opt.MapFrom(src => src.Safty_Percentage));
         }
     }
 }

@@ -13,6 +13,7 @@ namespace API.DTOS
         public int Age_Over18 { get; set; }
         public int Age_Total { get; set; }
         public double Safty_Index { get; set; }
+        public double Safty_Percentage { get; set; }
 
     }
 }

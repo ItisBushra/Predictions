@@ -24,10 +24,13 @@ namespace API.Models
         public int AgeTotal { get; set; }
         [Column("VALUE")]
         public double Value { get; set; }
-        [Column("Total_Country_Year_Sum")]
-        public double TotalCountryYearSum { get; set; }
-        [Column("Safty_Index")]
-        public double SaftyIndex { get; set; }
+        [Column("Total_Year_Country_Sum")]
+        public double TotalYearCountrySum { get; set; }
+        [Column("Safety_Index")]
+        public double SafetyIndex { get; set; }
+        [Column("Safety_Percentage")]
+        public double SaftyPercentage { get; set; }
+        
 
     }
 }
