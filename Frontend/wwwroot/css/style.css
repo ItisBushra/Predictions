@@ -4,6 +4,7 @@
 }
 
 body {
+    font-family: "Crimson Text", serif;
     background-color: #01171b;
 }
 
@@ -103,7 +104,7 @@ span {
 }
 
 .selection-styling {
-    padding-top: 25px;
+    padding-top: 10px;
 }
 
 .container {
@@ -222,16 +223,17 @@ input:disabled + span {
 .explanation-styling {
     color: white;
 }
-
-path.notFound {
-    pointer-events: none;
-    opacity: 0.5;
-    fill: #00394f;
-}
+    .explanation-styling:hover {
+       color: #006284;
+    }
+    path.notFound {
+        pointer-events: none;
+        opacity: 0.5;
+        fill: #00394f;
+    }
 
 #selected-country {
     color: white;
-    font-weight: bold;
     margin-left: 5px;
 }
 

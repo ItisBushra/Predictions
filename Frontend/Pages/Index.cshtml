@@ -1627,9 +1627,13 @@
     <h1 class="title-styling">Welcome to the Future</h1>
     <small class="title-styling">Choose a Country to Start!</small>
     <small class="title-styling">
-        <a class="explanation-styling" href=""> What is That? </a>
+          <partial name="~/Pages/Shared/_WhatIsThat.cshtml" />
+        <a href="#" class="explanation-styling" data-toggle="modal" data-target="#exampleModalCenter">
+            What is That?
+        </a>
     </small>
 </div>
+<div class="container" >
 <div class="selection-styling">
     <div class="title-styling">
         <h3 class="country-select-style">
@@ -1726,6 +1730,8 @@
             </label>
         </form>
     </div>
+
+
 </div>
 <div class="prediction-button-styling">
     <button class="button" disabled>
@@ -1735,4 +1741,22 @@
             <span>See Prediction</span>
         </div>
     </button>
+</div>
+</div>
+<div class="container d-none">
+<div class="title-styling">
+   <h4>
+        <label> Safty Percentage: </label>
+        <label>  Safty Level:</label>
+    </h4>
+</div>
+<div class="prediction-button-styling">
+    <button class="button" disabled>
+        <span class="shadow"></span>
+        <span class="edge"></span>
+        <div class="front">
+            <span>Go Back</span>
+        </div>
+    </button>
+</div>
 </div>
