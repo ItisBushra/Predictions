@@ -54,5 +54,15 @@ namespace API.Controllers
                                                                     Female, GenderTotal, AgeUnder18, AgeOver18, AgeTotal);
             return Ok(prediction);
         }
+
+        [HttpGet("GetSpecificSaftyPercentage")]
+        [ProducesResponseType(200, Type = typeof(FutureResults))]
+        public async Task<IActionResult> GetSpecificSaftyPercentage(string Country, int Year, int Male,
+                                                                 int Female, int GenderTotal, int AgeUnder18, int AgeOver18, int AgeTotal)
+        {
+            var safty = await _futureResult.GetaSaftyPercentageForaCountry(Country, Year, Male,
+                                                                    Female, GenderTotal, AgeUnder18, AgeOver18, AgeTotal);
+            return Ok(safty);
+        }
     }
 }

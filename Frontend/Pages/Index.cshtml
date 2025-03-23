@@ -1,6 +1,5 @@
 ﻿@page
 @model IndexModel
-
 <div class="map-container">
     <svg baseprofile="tiny"
          stroke-linecap="round"
@@ -1633,105 +1632,103 @@
         </a>
     </small>
 </div>
+<form method="get">
 <div class="container" >
 <div class="selection-styling">
-    <div class="title-styling">
-        <h3 class="country-select-style">
-            Country Chosen: <span id="selected-country"></span>
-        </h3>
-    </div>
-
-    <div class="container china-container" style="display: none">
-        <h3 class="region-select-style">Choose a Region:</h3>
-        <form>
-            <label>
-                <input type="radio" name="radio" disabled checked />
-                <span>Hong Kong Special Administrative Region</span>
-            </label>
-            <label>
-                <input type="radio" name="radio" disabled />
-                <span>Macao Special Administrative Region</span>
-            </label>
-        </form>
-    </div>
-
-    <div class="container uk-container" style="display: none">
-        <h3 class="region-select-style">Choose a Region:</h3>
-        <form>
-            <label>
-                <input type="radio" name="radio" disabled checked />
-                <span>United Kingdom of Great Britain and Northern Ireland</span>
-            </label>
-            <label>
-                <input type="radio" name="radio" disabled />
-                <span>United Kingdom (Northern Ireland)</span>
-            </label>
-            <label>
-                <input type="radio" name="radio" disabled />
-                <span>United Kingdom (Scotland)</span>
-            </label>
-        </form>
-    </div>
-
-    <div class="container">
-        <form>
-            <label>
-                <input type="radio" name="radio" checked disabled />
-                <span>2025</span>
-            </label>
-            <label>
-                <input type="radio" name="radio" disabled />
-                <span>2026</span>
-            </label>
-            <label>
-                <input type="radio" name="radio" disabled />
-                <span>2027</span>
-            </label>
-            <label>
-                <input type="radio" name="radio" disabled />
-                <span>2028</span>
-            </label>
-            <label>
-                <input type="radio" name="radio" disabled />
-                <span>2029</span>
-            </label>
-        </form>
-    </div>
-
-    <div class="container">
-        <form>
-            <label>
-                <input type="radio" name="radio" checked disabled />
-                <span>Male Population</span>
-            </label>
-            <label>
-                <input type="radio" name="radio" disabled />
-                <span>Female Population</span>
-            </label>
-            <label>
-                <input type="radio" name="radio" disabled />
-                <span>Total Population</span>
-            </label>
-        </form>
-    </div>
-    <div class="container">
-        <form>
-            <label>
-                <input type="radio" name="radio" checked disabled />
-                <span>Under 18 Years Old</span>
-            </label>
-            <label>
-                <input type="radio" name="radio" disabled />
-                <span>Over 18 Years Old</span>
-            </label>
-            <label>
-                <input type="radio" name="radio" disabled />
-                <span>Total Population</span>
-            </label>
-        </form>
-    </div>
-
-
+            <div class="title-styling">
+                <h3 class="country-select-style">
+                    Country Chosen:
+                     <input id="Country" type="hidden" name="Country" value="" />
+                    <span id="selected-country">
+                    </span>
+                </h3>
+            </div>
+            <div id="China" class="container" style="display: none">
+                <div class="form-styling">
+                    <label>
+                        <input type="radio" name="ChinaRegion" value="Hong Kong Special Administrative Region" checked />
+                        <span class="selected-china-region">Hong Kong Special Administrative Region</span>
+                    </label>
+                    <label>
+                        <input type="radio" name="ChinaRegion" value="Macao Special Administrative Region" />
+                        <span class="selected-china-region">Macao Special Administrative Region</span>
+                    </label>
+                </div>
+            </div>
+            <div id="UK" class="container" style="display: none">
+                <div class="form-styling">
+                    <label>
+                        <input type="radio" name="UKRegion" value="United Kingdom of Great Britain and Northern Ireland" checked />
+                        <span>United Kingdom of Great Britain and Northern Ireland</span>
+                    </label>
+                    <label>
+                        <input type="radio" name="UKRegion" value="United Kingdom (Northern Ireland)" />
+                        <span>United Kingdom (Northern Ireland)</span>
+                    </label>
+                    <label>
+                        <input type="radio" name="UKRegion" value="United Kingdom (Scotland)" />
+                        <span>United Kingdom (Scotland)</span>
+                    </label>
+                </div>
+            </div>
+            <div class="container">
+                <div id="Year" class="form-styling">
+                    <label>
+                        <input value="2025" name="Year" type="radio" checked disabled />
+                        <span>2025</span>
+                    </label>
+                    <label >
+                        <input value="2026" name="Year" type="radio" disabled />
+                        <span>2026</span>
+                    </label>
+                    <label>
+                        <input value="2027" name="Year" type="radio" disabled />
+                        <span>2027</span>
+                    </label>
+                    <label >
+                        <input value="2028" name="Year" type="radio" disabled />
+                        <span>2028</span>
+                    </label>
+                    <label>
+                        <input value="2029" name="Year" type="radio" disabled />
+                        <span>2029</span>
+                    </label>
+                </div>
+            </div>
+            <div class="container">
+                <div id="Gender" class="form-styling">
+                    <input id="SelecetedGender" name="" type="hidden" value="1" />
+                    <label>
+                        <input id="Gender_Male" value="0" type="radio" name="Gender" checked disabled />
+                        <span>Male Population</span>
+                    </label>
+                    <label >
+                        <input id="Gender_Female" value="0" type="radio" name="Gender" disabled />
+                        <span>Female Population</span>
+                    </label>
+                    <label>
+                        <input id="Gender_Total" value="0" type="radio" name="Gender" disabled />
+                        <span>Total Population</span>
+                    </label>
+                </div>
+            </div>
+            <div class="container">
+                <div id="Age" class="form-styling">
+                    <input id="SelecetedAge" name="" type="hidden" value="1" />
+                    <label>
+                        <input id="Age_Under18" value="0" type="radio" name="Age" checked disabled />
+                        <span>Under 18 Years Old</span>
+                    </label>
+                    <label>
+                        <input id="Age_Over18" value="0" type="radio" name="Age" disabled />
+                        <span>Over 18 Years Old</span>
+                    </label>
+                    <label>
+                        <input id="Age_Total" value="0" type="radio" name="Age" disabled />
+                        <span>Total Population</span>
+                    </label>
+                </div>
+            </div>
 </div>
 <div class="prediction-button-styling">
     <button class="button" disabled>
@@ -1742,16 +1739,19 @@
         </div>
     </button>
 </div>
+
 </div>
-<div class="container d-none">
+</form>
+<!--- d-none d-block  --->
+<div class="container">
 <div class="title-styling">
    <h4>
-        <label> Safty Percentage: </label>
+        <label> Safty Percentage: @Model?.Safty?.Percentage </label>
         <label>  Safty Level:</label>
     </h4>
 </div>
 <div class="prediction-button-styling">
-    <button class="button" disabled>
+        <button class="button" id="goBackButton" disabled>
         <span class="shadow"></span>
         <span class="edge"></span>
         <div class="front">

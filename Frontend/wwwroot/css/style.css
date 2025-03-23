@@ -42,7 +42,7 @@ svg path {
     justify-content: center;
 }
 
-form {
+.form-styling {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
@@ -238,12 +238,6 @@ input:disabled + span {
 }
 
 .country-select-style {
-    padding-right: 0px;
-    padding-bottom: 12px;
-}
-
-.region-select-style {
-    text-align: center;
     padding-right: 0px;
     padding-bottom: 12px;
 }

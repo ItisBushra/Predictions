@@ -29,8 +29,7 @@ namespace API.Models
         [Column("Safety_Index")]
         public double SafetyIndex { get; set; }
         [Column("Safety_Percentage")]
-        public double SaftyPercentage { get; set; }
-        
+        public double SaftyPercentage { get; set; }      
 
     }
 }

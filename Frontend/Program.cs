@@ -1,8 +1,12 @@
+using Microsoft.EntityFrameworkCore;
+
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
 builder.Services.AddRazorPages();
-
+builder.Services.AddHttpClient();
+// Add services to the container.
+builder.Services.AddDbContext<PredictionsDbContext>(options =>
+    options.UseNpgsql(builder.Configuration.GetConnectionString("DataBase")));
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -13,6 +17,7 @@ if (!app.Environment.IsDevelopment())
     app.UseHsts();
 }
 
+
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 
@@ -21,5 +26,10 @@ app.UseRouting();
 app.UseAuthorization();
 
 app.MapRazorPages();
+app.MapControllers();
+app.UseEndpoints(endpoints =>
+{
+    endpoints.MapRazorPages();
+});
 
 app.Run();
