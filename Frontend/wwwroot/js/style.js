@@ -1,4 +1,4 @@
-﻿document.addEventListener("DOMContentLoaded", function () {// must be DRY
+﻿document.addEventListener("DOMContentLoaded", function () {
   const paths = document.querySelectorAll("svg path");
     const YearRadioButtons = document.querySelectorAll('input[name="Year"]');
     const AgeRadioButtons = document.querySelectorAll('#Age input[type="radio"]');
@@ -28,6 +28,21 @@
         });
     });
 
+
+    //radio age and gender
+    GenderRadioButtons.forEach(radio => {
+        radio.addEventListener('change', function () {
+            const selectedGenderId = this.id;
+            SelectedGenderInput.name = selectedGenderId;
+        });
+    });
+    AgeRadioButtons.forEach(radio => {
+        radio.addEventListener('change', function () {
+            const selectedAgeId = this.id;
+            SelectedAgeInput.name = selectedAgeId;
+        });
+    });
+
     //csv map 
     paths.forEach((path) => {
     path.addEventListener("click", function () {
@@ -44,8 +59,6 @@
           AgeRadioButtons.forEach((radio) => (radio.disabled = true));
           GenderRadioButtons.forEach((radio) => (radio.disabled = true));
           predictionButton.disabled = true;
-          selectedCountryElement.textContent = "";
-          countryInput.value = "";
       } else {
         this.classList.add("active");
           YearRadioButtons.forEach((radio) => (radio.disabled = false));
@@ -82,28 +95,14 @@
           }
         }
 
-        //radio age and gender
-        GenderRadioButtons.forEach(radio => {
-            radio.addEventListener('change', function () {
-                const selectedGenderId = this.id;
-                SelectedGenderInput.name = selectedGenderId;
-            });
-        });
-        AgeRadioButtons.forEach(radio => {
-            radio.addEventListener('change', function () {
-                const selectedAgeId = this.id;
-                SelectedAgeInput.name = selectedAgeId;
-            });
-        });
-
-        document.addEventListener('DOMContentLoaded', function () {
-            const initiallyCheckedRadioGender = document.querySelector('#Gender input[type="radio"]:checked');
-            const initiallyCheckedRadioAge = document.querySelector('#Age input[type="radio"]:checked');
-            if (initiallyCheckedRadioGender && initiallyCheckedRadioAge) {
-                SelectedGenderInput.value = initiallyCheckedRadioGender.id;
-                SelectedAgeInput.value = initiallyCheckedRadioAge.id;
-            }
-        });
     });
-  });
+       });
+    document.querySelector('form').addEventListener('submit', function (e) {
+        const currentGender = document.querySelector('#Gender input[type="radio"]:checked');
+        if (currentGender) SelectedGenderInput.name = currentGender.id;
+
+        const currentAge = document.querySelector('#Age input[type="radio"]:checked');
+        if (currentAge) SelectedAgeInput.name = currentAge.id;
+
+    });
 });
