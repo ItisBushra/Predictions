@@ -28,6 +28,7 @@ namespace API.Controllers
         }
 
         [HttpGet("GetAll")]
+        [ResponseCache(Duration = 60)]
         [ProducesResponseType(200, Type = typeof(IEnumerable<FutureResults>))]
         public async Task<ActionResult<IEnumerable<FutureResults>>> GetAllPredictions()
         {
@@ -37,6 +38,7 @@ namespace API.Controllers
         }
 
         [HttpGet("GetAll/{id}")]
+        [ResponseCache(Duration = 60)]
         [ProducesResponseType(200, Type = typeof(FutureResults))]
         public async Task<IActionResult> GetPredictionDetailed(int id)
         {
@@ -46,6 +48,7 @@ namespace API.Controllers
         }
 
         [HttpGet("GetSpecificPrediction")]
+        [ResponseCache(Duration = 60)]
         [ProducesResponseType(200, Type = typeof(FutureResults))]
         public async Task<IActionResult> GetSpecificPrediction(string Country, int Year, int Male,
                                                                     int Female, int GenderTotal, int AgeUnder18, int AgeOver18, int AgeTotal)
@@ -56,6 +59,7 @@ namespace API.Controllers
         }
 
         [HttpGet("GetSpecificSaftyPercentage")]
+        [ResponseCache(Duration = 60)]
         [ProducesResponseType(200, Type = typeof(FutureResults))]
         public async Task<IActionResult> GetSpecificSaftyPercentage(string Country, int Year, int Male,
                                                                  int Female, int GenderTotal, int AgeUnder18, int AgeOver18, int AgeTotal)
