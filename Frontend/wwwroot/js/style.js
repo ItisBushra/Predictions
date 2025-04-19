@@ -13,6 +13,11 @@
     const chinaContainer = document.getElementById("China");
     const UkContainer = document.getElementById("UK");
 
+    const loader = document.querySelector(".loader");
+    const predictionResult = document.querySelector(".prediction-result");
+    const appData = document.getElementById("app-data");
+    window.hasInitialData = appData.dataset.hasInitialData === "true";
+
     ChinaRegionRadioButtons.forEach(radio => {
         radio.addEventListener('change', function () {
             const selectedRegion = this.value;
@@ -96,13 +101,38 @@
         }
 
     });
-       });
+    });
+
+    //js loader
+    loader.classList.add("loader-hidden");
+    if (!window.hasInitialData) {
+        predictionResult.style.display = "none";
+        predictionButton.disabled = false;
+    } else {
+        predictionResult.style.display = "block";
+        predictionButton.disabled = true; 
+    }
+    const scroll = sessionStorage.getItem('scrollPosition');
+    if (scroll) {
+        window.scrollTo(0, parseInt(scroll));
+        sessionStorage.removeItem('scrollPosition');
+    }
+
+    predictionButton.addEventListener("click", function (e) {
+        e.preventDefault(); 
+        loader.style.display = "flex";
+        sessionStorage.setItem('scrollPosition', window.pageYOffset);
+        loader.classList.remove("loader-hidden");
+        predictionResult.style.display = "none";
+        predictionButton.disabled = true;
+        document.querySelector("form").submit();
+    });    
+
     document.querySelector('form').addEventListener('submit', function (e) {
         const currentGender = document.querySelector('#Gender input[type="radio"]:checked');
         if (currentGender) SelectedGenderInput.name = currentGender.id;
 
         const currentAge = document.querySelector('#Age input[type="radio"]:checked');
         if (currentAge) SelectedAgeInput.name = currentAge.id;
-
-    });
+    });      
 });

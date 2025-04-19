@@ -24,19 +24,28 @@ namespace Frontend.Pages
 
         public async Task<IActionResult> OnGet([FromQuery]FutureResultsDTO futureResultsDTO)
         {
-            TempData["BackButton"] = "d-none";
             if (futureResultsDTO.Country != null)
             {
                 var client = _clientFactory.CreateClient();
-                var response = await client.GetAsync($"https://localhost:7000/api/FutureResults/GetSpecificPrediction?Country=" +
-                    $"{futureResultsDTO.Country}&Year={futureResultsDTO.Year}&Male={futureResultsDTO.Gender_Male}&Female=" +
-                    $"{futureResultsDTO.Gender_Female}&GenderTotal={futureResultsDTO.Gender_Total}&AgeUnder18={futureResultsDTO.Age_Under18}" +
-                    $"&AgeOver18={futureResultsDTO.Age_Over18}&AgeTotal={futureResultsDTO.Age_Total}");
-
-                if (!response.IsSuccessStatusCode) return NotFound();
-                var predictionJson = await response.Content.ReadAsStringAsync();
-                TempData["BackButton"] = "d-block";
-                Safty = ResultInfo(futureResultsDTO, predictionJson);
+                try
+                {
+                    var response = await client.GetAsync($"https://localhost:7000/api/FutureResults/GetSpecificPrediction?Country=" +
+                   $"{futureResultsDTO.Country}&Year={futureResultsDTO.Year}&Male={futureResultsDTO.Gender_Male}&Female=" +
+                   $"{futureResultsDTO.Gender_Female}&GenderTotal={futureResultsDTO.Gender_Total}&AgeUnder18={futureResultsDTO.Age_Under18}" +
+                   $"&AgeOver18={futureResultsDTO.Age_Over18}&AgeTotal={futureResultsDTO.Age_Total}");
+                    if (response.IsSuccessStatusCode)
+                    {
+                        ViewData["HasData"] = true;
+                        var predictionJson = await response.Content.ReadAsStringAsync();
+                        Safty = ResultInfo(futureResultsDTO, predictionJson);
+                    }                
+                }
+                catch (Exception ex)
+                {
+                    ViewData["HasData"] = false;
+                    return BadRequest(ex.Message);
+                }            
+               
             }
             return Page();
         }

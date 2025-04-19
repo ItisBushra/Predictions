@@ -39,7 +39,7 @@ namespace API.Repository
             {
                 var SpecificPrediction = await _context.Future_Results.FirstOrDefaultAsync(c => c.Year == Year && c.Country == Country && c.GenderFemale == Female
                 && c.GenderMale == Male && c.GenderTotal == GenderTotal && c.AgeOver18 == AgeOver18 && c.AgeUnder18 == AgeUnder18 && c.AgeTotal == AgeTotal);
-                var saftyindex = SpecificPrediction.SafetyIndex;
+                var saftyindex = SpecificPrediction?.SafetyIndex;
                 return saftyindex;
             }
             catch (Exception ex)

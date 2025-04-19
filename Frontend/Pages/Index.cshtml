@@ -1623,17 +1623,18 @@
     </svg>
 </div>
 <div>
-    <h1 class="title-styling">Welcome to the Future</h1>
+    <h1 class="title-styling">Welcome to Global Safety Predictions</h1>
     <small class="title-styling">Choose a Country to Start!</small>
     <small class="title-styling">
           <partial name="~/Pages/Shared/_WhatIsThat.cshtml" />
-        <a href="#" class="explanation-styling" data-toggle="modal" data-target="#exampleModalCenter">
+     <!----  <a href="#" class="explanation-styling" data-toggle="modal" data-target="#exampleModalCenter">
             What is That?
-        </a>
+        </a> ---> 
     </small>
 </div>
-<form method="get">
-<div class="container" >
+<form method="get" target="_self">
+    <div id="app-data" data-has-initial-data="@(ViewData["HasData"] != null && (bool)ViewData["HasData"] ? "true" : "false")"></div>
+    <div class="container">
 <div class="selection-styling">
             <div class="title-styling">
                 <h3 class="country-select-style">
@@ -1730,8 +1731,10 @@
                 </div>
             </div>
 </div>
-
-        <div class="container @TempData["BackButton"]">
+        <div class="loader-container" >
+         <div class="loader" ></div>
+       
+        <div class="container prediction-result">
             <div class="title-styling mt-3">
                 <h4>
                     <label> The safety percentage prediction for @Model?.Safty?.Gender @Model?.Safty?.AgeRange in @Model?.Safty?.Country is @Model?.Safty?.Percentage </label>
@@ -1739,9 +1742,10 @@
                 </h4>
             </div>
         </div>
+        </div>
 
 <div class="prediction-button-styling">
-    <button class="button" disabled>
+    <button type="button" class="button" disabled>
         <span class="shadow"></span>
         <span class="edge"></span>
         <div class="front">
@@ -1749,6 +1753,5 @@
         </div>
     </button>
 </div>
-
 </div>
 </form>
