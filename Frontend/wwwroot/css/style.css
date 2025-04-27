@@ -288,3 +288,21 @@ input:disabled + span {
         transform:rotate(1turn);
     }
 }
+
+button.close {
+    background: none;
+    border: none;
+    padding: 0;
+    margin: 0;
+    font-size: 1.5rem;
+    line-height: 1;
+    color: #000; 
+    opacity: 0.5;
+}
+
+    button.close:hover {
+        opacity: 0.75;
+    }
+.pop-styling {
+    line-height: 1.6rem;
+}
