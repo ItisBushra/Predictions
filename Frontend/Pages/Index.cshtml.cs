@@ -78,6 +78,7 @@ namespace Frontend.Pages
             Safty.Percentage = percentage_percent + "%";
             Safty.Level = level;
             Safty.Country = futureResultsDTO.Country;
+            Safty.Year = futureResultsDTO.Year;
 
             if (futureResultsDTO.Gender_Female == 1) Safty.Gender = "female";
             if (futureResultsDTO.Gender_Male == 1) Safty.Gender = "male";

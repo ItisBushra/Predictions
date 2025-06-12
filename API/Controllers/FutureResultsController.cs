@@ -61,11 +61,17 @@ namespace API.Controllers
         [HttpGet("GetSpecificSaftyPercentage")]
         [ResponseCache(Duration = 60)]
         [ProducesResponseType(200, Type = typeof(FutureResults))]
-        public async Task<IActionResult> GetSpecificSaftyPercentage(string Country, int Year, int Male,
-                                                                 int Female, int GenderTotal, int AgeUnder18, int AgeOver18, int AgeTotal)
+        public async Task<IActionResult> GetSpecificSaftyPercentage([FromQuery] FutureResultsDTO request)
         {
-            var safty = await _futureResult.GetaSaftyPercentageForaCountry(Country, Year, Male,
-                                                                    Female, GenderTotal, AgeUnder18, AgeOver18, AgeTotal);
+            var safty = await _futureResult.GetaSaftyPercentageForaCountry(
+                    request.Country,
+                    request.Year,
+                    request.Gender_Male,
+                    request.Gender_Female,
+                    request.Gender_Total,
+                    request.Age_Under18,
+                    request.Age_Over18,
+                    request.Age_Total);
             return Ok(safty);
         }
     }
