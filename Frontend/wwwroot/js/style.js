@@ -18,6 +18,18 @@
     const appData = document.getElementById("app-data");
     window.hasInitialData = appData.dataset.hasInitialData === "true";
 
+    const cleanUrlParameters = (essentialParams = []) => {
+        const url = new URL(window.location.href);
+        const currentParams = new Set(essentialParams);
+        const allParamKeys = Array.from(url.searchParams.keys());
+        allParamKeys.forEach(param => {
+            if (!currentParams.has(param)) {
+                url.searchParams.delete(param);
+            }
+        });
+        window.history.replaceState({}, "", url);
+    };
+
     ChinaRegionRadioButtons.forEach(radio => {
         radio.addEventListener('change', function () {
             const selectedRegion = this.value;
@@ -32,7 +44,6 @@
             selectedCountryElement.textContent = selectedRegion;
         });
     });
-
 
     //radio age and gender
     GenderRadioButtons.forEach(radio => {
@@ -54,46 +65,49 @@
       if (this.classList.contains("notFound")) {
         return;
         }
+        predictionButton.disabled = true;
 
       const isActive = this.classList.contains("active");
       paths.forEach((p) => p.classList.remove("active"));
         if (isActive) {
             UkContainer.style.display = "none";
+            predictionButton.disabled = !this.classList.contains("active");
             chinaContainer.style.display = "none";
           YearRadioButtons.forEach((radio) => (radio.disabled = true));
           AgeRadioButtons.forEach((radio) => (radio.disabled = true));
           GenderRadioButtons.forEach((radio) => (radio.disabled = true));
-          predictionButton.disabled = true;
       } else {
         this.classList.add("active");
           YearRadioButtons.forEach((radio) => (radio.disabled = false));
           AgeRadioButtons.forEach((radio) => (radio.disabled = false));
           GenderRadioButtons.forEach((radio) => (radio.disabled = false));
-        predictionButton.disabled = false;
+            predictionButton.disabled = false;
+
         const titleElement = this.querySelector("title");
           if (titleElement) {
-                  const countryName = titleElement.textContent;
+              const countryName = titleElement.textContent.trim();
+              cleanUrlParameters();
                   selectedCountryElement.textContent = countryName;
                   countryInput.value = countryName;
-          }
-          if (titleElement.textContent.includes("China")) {
-              chinaContainer.style.display = "block";
-              UkContainer.style.display = "none";
-              const selectedChinaRegion = document.querySelector('#China input[type="radio"]:checked');
-              if (selectedChinaRegion) {
-                  countryInput.value = selectedChinaRegion.value;
-                  selectedCountryElement.textContent = selectedChinaRegion.value;
-              }
-          }
-          if (titleElement.textContent.includes("United Kingdom") && !titleElement.textContent.includes("China")) {
-              UkContainer.style.display = "block";
-              chinaContainer.style.display = "none";
-              const selectedUkRegion = document.querySelector('#UK input[type="radio"]:checked');
-              if (selectedUkRegion) {
-                  countryInput.value = selectedUkRegion.value;
-                  selectedCountryElement.textContent = selectedUkRegion.value;
-              }
-          }
+            }
+            if (titleElement.textContent.includes("China")) {
+                chinaContainer.style.display = "block";
+                UkContainer.style.display = "none";
+                const selectedChinaRegion = document.querySelector('#China input[type="radio"]:checked');
+                if (selectedChinaRegion) {
+                    countryInput.value = selectedChinaRegion.value;
+                    selectedCountryElement.textContent = selectedChinaRegion.value;
+                }
+            }
+            if (titleElement.textContent.includes("United Kingdom") && !titleElement.textContent.includes("China")) {
+                UkContainer.style.display = "block";
+                chinaContainer.style.display = "none";
+                const selectedUkRegion = document.querySelector('#UK input[type="radio"]:checked');
+                if (selectedUkRegion) {
+                    countryInput.value = selectedUkRegion.value;
+                    selectedCountryElement.textContent = selectedUkRegion.value;
+                }
+            }
           if (!titleElement.textContent.includes("United Kingdom") && !titleElement.textContent.includes("China")) {
               chinaContainer.style.display = "none";
               UkContainer.style.display = "none";
@@ -107,11 +121,11 @@
     loader.classList.add("loader-hidden");
     if (!window.hasInitialData) {
         predictionResult.style.display = "none";
-        predictionButton.disabled = false;
     } else {
         predictionResult.style.display = "block";
         predictionButton.disabled = true; 
     }
+
     const scroll = sessionStorage.getItem('scrollPosition');
     if (scroll) {
         window.scrollTo(0, parseInt(scroll));
@@ -128,11 +142,19 @@
         document.querySelector("form").submit();
     });    
 
-    document.querySelector('form').addEventListener('submit', function (e) {
-        const currentGender = document.querySelector('#Gender input[type="radio"]:checked');
-        if (currentGender) SelectedGenderInput.name = currentGender.id;
 
-        const currentAge = document.querySelector('#Age input[type="radio"]:checked');
-        if (currentAge) SelectedAgeInput.name = currentAge.id;
-    });      
+    document.querySelector("form").addEventListener("submit", function (e) {
+        const country = document.getElementById("Country").value;
+        e.preventDefault();
+        if (country !== "China" && country !== "United Kingdom") {
+            document.getElementById("ChinaRegion").disabled = true;
+            document.getElementById("UKRegion").disabled = true;
+        }
+        setTimeout(() => {
+            this.submit();
+        }, 0);
+    });
+
+    cleanUrlParameters();
+   
 });
