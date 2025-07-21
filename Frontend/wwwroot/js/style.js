@@ -6,6 +6,7 @@
     const ChinaRegionRadioButtons = document.querySelectorAll('#China input[type="radio"]');
     const UKRegionRadioButtons = document.querySelectorAll('#UK input[type="radio"]');
     const SelectedGenderInput = document.getElementById('SelecetedGender');
+    const Combined = document.getElementById('Demographic');
     const SelectedAgeInput = document.getElementById('SelecetedAge');
     const predictionButton = document.querySelector(".button");
     const selectedCountryElement = document.getElementById("selected-country");
@@ -45,17 +46,26 @@
         });
     });
 
-    //radio age and gender
+    function updateCombinedValue() {
+        const gender = SelectedGenderInput.name || '';
+        const age = SelectedAgeInput.name || '';
+        if (gender && age) {
+            Combined.value = `${gender}_${age}`;
+        }
+        return Combined;
+    }
+
     GenderRadioButtons.forEach(radio => {
         radio.addEventListener('change', function () {
-            const selectedGenderId = this.id;
-            SelectedGenderInput.name = selectedGenderId;
+            SelectedGenderInput.name = this.id;
+            updateCombinedValue();
         });
     });
+
     AgeRadioButtons.forEach(radio => {
         radio.addEventListener('change', function () {
-            const selectedAgeId = this.id;
-            SelectedAgeInput.name = selectedAgeId;
+            SelectedAgeInput.name = this.id;
+            updateCombinedValue();
         });
     });
 
