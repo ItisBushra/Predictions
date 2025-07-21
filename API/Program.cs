@@ -12,8 +12,7 @@ builder.Services.AddDbContext<PredictionsDbContext>(options =>
 builder.Services.AddControllers();
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
-builder.Services.AddScoped<IFutureResultRepository, FutureResultRepository>();
-builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+builder.Services.AddScoped<ISafetyTrendsRepository, SafetyTrendsRepository>();
 builder.Services.AddResponseCaching();
 // Add Swagger services
 builder.Services.AddEndpointsApiExplorer();

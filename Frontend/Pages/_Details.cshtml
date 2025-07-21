@@ -1,0 +1,31 @@
+﻿@model IndexModel
+
+<div class="modal fade" id="DetailsModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title text-black" id="exampleModalLongTitle">
+                    <strong>Trend Analysis</strong>
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    &times;
+                </button>
+            </div>
+            <div class="modal-body pop-styling text-black">
+                <h4 style="text-align:justify;">
+                    For the chosen demographics, there is a total change of @($"{Model?.Safty?.Cumulative_Growth:F2}")%
+                    in victim numbers, the data shows a @($"{Model?.Safty?.YoY_Pct_Change:F2}")% compared to the previous year.
+                    Looking at longer-term patterns, the current trend is classified as @($"{Model?.Safty?.Rolling_Trend:F2}"),
+                    with a calculated slope of @($"{Model?.Safty?.Rolling_Slope:F2}"), suggesting a @($"{Model?.Safty?.Yearly_Trend:F2}") in victim rates.
+                </h4>
+
+                <label class="justify-content-center d-block mt-3">
+                    <img src="~/country_charts/@Model?.Safty?.Country.Replace(" ", "_").Replace("/", "_")_value_trend.png"
+                         alt="Trend chart for @Model?.Safty?.Country"
+                         style="max-width: 100%; height: auto;" />
+                </label>
+
+            </div>
+        </div>
+    </div>
+</div>

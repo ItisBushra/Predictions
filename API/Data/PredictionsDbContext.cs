@@ -7,11 +7,11 @@ public class PredictionsDbContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.Entity<FutureResults>(entity =>
+        modelBuilder.Entity<SafetyTrends>(entity =>
         {
-            entity.ToTable("Future_Results", t => t.ExcludeFromMigrations());
+            entity.ToTable("Safety_Trends", t => t.ExcludeFromMigrations());
             entity.HasKey(e => e.Id);
         });
     }
-    public DbSet<FutureResults> Future_Results { get; set; }
+    public DbSet<SafetyTrends> Safety_Trends { get; set; }
 }

@@ -1620,7 +1620,7 @@
     </svg>
 </div>
 <div>
-    <h1 class="title-styling">Welcome to Global Safety Predictions</h1>
+    <h1 class="title-styling">Welcome to Safety Trends Predictions</h1>
     <small class="title-styling">Choose a Country to Start!</small>
     <small class="title-styling">
           <partial name="~/Pages/Shared/_WhatIsThat.cshtml" />
@@ -1697,15 +1697,15 @@
                 <div id="Gender" class="form-styling">
                     <input id="SelecetedGender" name="" type="hidden" value="1" />
                     <label>
-                        <input id="Gender_Male" value="0" type="radio" name="Gender" disabled />
+                        <input id="Male" value="0" type="radio" name="Gender" disabled />
                         <span>Male Population</span>
                     </label>
                     <label >
-                        <input id="Gender_Female" value="0" type="radio" name="Gender" disabled />
+                        <input id="Female" value="0" type="radio" name="Gender" disabled />
                         <span>Female Population</span>
                     </label>
                     <label>
-                        <input id="Gender_Total" value="0" type="radio" name="Gender" disabled />
+                        <input id="AllGenders" value="0" type="radio" name="Gender" disabled />
                         <span>Total Population</span>
                     </label>
                 </div>
@@ -1714,39 +1714,52 @@
                 <div id="Age" class="form-styling">
                     <input id="SelecetedAge" name="" type="hidden" value="1" />
                     <label>
-                        <input id="Age_Under18" value="0" type="radio" name="Age" disabled />
+                        <input id="Under18" value="0" type="radio" name="Age" disabled />
                         <span>Under 18 Years Old</span>
                     </label>
                     <label>
-                        <input id="Age_Over18" value="0" type="radio" name="Age" disabled />
+                        <input id="Over18" value="0" type="radio" name="Age" disabled />
                         <span>Over 18 Years Old</span>
                     </label>
                     <label>
-                        <input id="Age_Total" value="0" type="radio" name="Age" disabled />
+                        <input id="AllAges" value="0" type="radio" name="Age" disabled />
                         <span>Total Population</span>
                     </label>
                 </div>
             </div>
-</div>
-        <div class="loader-container" >
-         <div class="loader" ></div>
-       
-        <div class="container prediction-result">
-            <div class="title-styling mt-3">
-                <h4>
-                    <label> The safety percentage prediction for @Model?.Safty?.Gender @Model?.Safty?.AgeRange in @Model?.Safty?.Country in @Model?.Safty?.Year is @Model?.Safty?.Percentage </label>
-                    <label class="justify-content-center">  Safty Level: @Model?.Safty?.Level</label>
-                </h4>
+            <input id="Demographic" name="Demographic" type="hidden" value="" />
+            <div class="loader-container">
+                <div class="loader"></div>
+                <div class="container prediction-result">
+                    <div class="title-styling mt-3">
+                        <h4>
+                            <label>
+                                In @Model?.Safty?.Country, for @Model?.Safty?.Gender @Model?.Safty?.AgeRange in the year 
+                                @Model?.Safty?.Year, the predicted safety trend is @Model?.Safty?.Yearly_Trend with a 
+                                victime rate change of @($"{Model?.Safty?.Rolling_Slope:F2}")%. This demographic accounts
+                                for @($"{Model?.Safty?.Probability:F2}")% of the total predicted victims.
+                            </label>
+                            <label class="justify-content-center">
+                                <small>
+                                    <partial name="~/Pages/_Details.cshtml" />
+                                    <a style="color:white;" href="#" class="explanation-styling" data-toggle="modal" data-target="#DetailsModalCenter">
+                                        more details?
+                                    </a>
+                                </small>
+                            </label>
+                        </h4>
+                    </div>
+                </div>
             </div>
-        </div>
-        </div>
+</div>
+       
 
 <div class="prediction-button-styling">
     <button type="button" class="button" disabled>
         <span class="shadow"></span>
         <span class="edge"></span>
         <div class="front">
-            <span>See Prediction</span>
+                    <span>Safety Trend</span>
         </div>
     </button>
 </div>

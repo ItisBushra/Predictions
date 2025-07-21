@@ -13,8 +13,7 @@ namespace Frontend.Pages
     public class IndexModel : PageModel
     {
         private readonly IHttpClientFactory _clientFactory;
-        public FutureResultsDTO futureResultsDTO { get; set; }
-        public SaftyViewModel Safty { get; set; }
+        public SafetyViewModel Safty { get; set; }
 
 
         public IndexModel(IHttpClientFactory clientFactory)
@@ -22,72 +21,62 @@ namespace Frontend.Pages
             _clientFactory = clientFactory;
         }
 
-        public async Task<IActionResult> OnGet([FromQuery]FutureResultsDTO futureResultsDTO)
+        public async Task<IActionResult> OnGet([FromQuery]SafetyTrendsDTO safetyTrendsDTO)
         {
-            if (futureResultsDTO.Country != null)
+            if (safetyTrendsDTO.Country != null)
             {
                 var client = _clientFactory.CreateClient();
                 try
                 {
-                    var response = await client.GetAsync($"https://localhost:7000/api/FutureResults/GetSpecificPrediction?Country=" +
-                   $"{futureResultsDTO.Country}&Year={futureResultsDTO.Year}&Male={futureResultsDTO.Gender_Male}&Female=" +
-                   $"{futureResultsDTO.Gender_Female}&GenderTotal={futureResultsDTO.Gender_Total}&AgeUnder18={futureResultsDTO.Age_Under18}" +
-                   $"&AgeOver18={futureResultsDTO.Age_Over18}&AgeTotal={futureResultsDTO.Age_Total}");
+                    var response = await client.GetAsync($"https://localhost:7000/api/SafetyTrends/GetSpecificTrend?Country=" +
+                   $"{safetyTrendsDTO.Country}&Demographics={safetyTrendsDTO.Demographic}&Year={safetyTrendsDTO.Year}");
                     if (response.IsSuccessStatusCode)
                     {
                         ViewData["HasData"] = true;
                         var predictionJson = await response.Content.ReadAsStringAsync();
-                        Safty = ResultInfo(futureResultsDTO, predictionJson);
+                        Safty = ResultInfo(predictionJson);
                     }                
                 }
                 catch (Exception ex)
                 {
                     ViewData["HasData"] = false;
                     return BadRequest(ex.Message);
-                }            
-               
+                }
             }
             return Page();
         }
-        private SaftyViewModel ResultInfo(FutureResultsDTO futureResultsDTO, string Percentage)
+        private SafetyViewModel ResultInfo(string predictionJson)
         {
-            Safty = new SaftyViewModel();
-            string percentage_percent = $"{Percentage.Split('.')[0]}.{Percentage.Split('.')[1][0]}";
+            var prediction = JsonConvert.DeserializeObject<SafetyViewModel>(predictionJson);
 
-            double num = double.Parse(percentage_percent);
-            string level = "";
-            switch (num)
+            var parts = prediction.Demographic.Split('_');
+
+            string gender = parts[0]
+                .Replace("AllGenders", "All Genders");
+
+            string ageRange = parts.Length > 1
+                ? parts[1]
+                    .Replace("Over", "Over ")
+                    .Replace("Under", "Under ")
+                    .Replace("AllAges", "All Ages")
+                : "";
+
+            var Safety = new SafetyViewModel
             {
-                case var p when (p <= 25 && p >= 0):
-                    level = "Low, Unsafe";
-                    break;
-
-                case var p when (p <= 50 && p > 25):
-                    level = "Somewhat Unsafe";
-                    break;
-
-                case var p when (p <= 75 && p > 50):
-                    level = "Somewhat Safe";
-                    break;
-
-                case var p when (p <= 100 && p > 75):
-                    level = "Safe";
-                    break;
-
-            }
-            Safty.Percentage = percentage_percent + "%";
-            Safty.Level = level;
-            Safty.Country = futureResultsDTO.Country;
-            Safty.Year = futureResultsDTO.Year;
-
-            if (futureResultsDTO.Gender_Female == 1) Safty.Gender = "female";
-            if (futureResultsDTO.Gender_Male == 1) Safty.Gender = "male";
-            if (futureResultsDTO.Gender_Total == 1) Safty.Gender = "total population";
-
-            if (futureResultsDTO.Age_Over18 == 1) Safty.AgeRange = "adults (over 18)";
-            if (futureResultsDTO.Age_Total == 1) Safty.AgeRange = "all ages";
-            if (futureResultsDTO.Age_Under18 == 1) Safty.AgeRange = "minors (under 18)";
-           return Safty;
+                VALUE = prediction.VALUE,
+                Rolling_Trend = prediction.Rolling_Trend,
+                Country = prediction.Country,
+                Year = prediction.Year,
+                Gender = gender,
+                AgeRange = ageRange,
+                Probability = prediction.Probability,
+                YoY_Pct_Change = prediction.YoY_Pct_Change,
+                Baseline = prediction.Baseline,
+                Rolling_Slope = prediction.Rolling_Slope,
+                Yearly_Trend = prediction.Yearly_Trend,
+                Cumulative_Growth = prediction.Cumulative_Growth
+            };
+            return Safety;
         }
     }
 }
